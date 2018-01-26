@@ -13,6 +13,8 @@
 		32C3E252201AC25A00E37A89 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C3E250201AC25A00E37A89 /* Main.storyboard */; };
 		32C3E254201AC25A00E37A89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32C3E253201AC25A00E37A89 /* Assets.xcassets */; };
 		32C3E257201AC25A00E37A89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C3E255201AC25A00E37A89 /* LaunchScreen.storyboard */; };
+		32E76D3B201AC4D1005B705E /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E76D3A201AC4D1005B705E /* Order.swift */; };
+		32E76D3C201AC629005B705E /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E76D3A201AC4D1005B705E /* Order.swift */; };
 		3D84E94A4CD10C5904BBF9F9 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8C3E2E70BEA037094F82A9 /* Pods_Demo.framework */; };
 		932F8AB92646499558E2242A /* Pods_Orderable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC9474DAC12B8F1AAAD185A /* Pods_Orderable.framework */; };
 /* End PBXBuildFile section */
@@ -31,6 +33,7 @@
 		32C3E253201AC25A00E37A89 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		32C3E256201AC25A00E37A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32C3E258201AC25A00E37A89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32E76D3A201AC4D1005B705E /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		8A8C3E2E70BEA037094F82A9 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC9474DAC12B8F1AAAD185A /* Pods_Orderable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Orderable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B043654CE00E07D4C6417852 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +84,7 @@
 			children = (
 				32C3E23E201AC21E00E37A89 /* Orderable.h */,
 				32C3E23F201AC21E00E37A89 /* Info.plist */,
+				32E76D3A201AC4D1005B705E /* Order.swift */,
 			);
 			path = Orderable;
 			sourceTree = "<group>";
@@ -184,6 +188,7 @@
 				TargetAttributes = {
 					32C3E23A201AC21E00E37A89 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					32C3E249201AC25A00E37A89 = {
@@ -341,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32E76D3B201AC4D1005B705E /* Order.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32E76D3C201AC629005B705E /* Order.swift in Sources */,
 				32C3E24F201AC25A00E37A89 /* ViewController.swift in Sources */,
 				32C3E24D201AC25A00E37A89 /* AppDelegate.swift in Sources */,
 			);
@@ -492,6 +499,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D396AA5EDE429C0BBCF8722 /* Pods-Orderable.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -505,6 +513,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.star--hoshi.Orderable";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -514,6 +523,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 19F9E5359BE58DBC9F61A543 /* Pods-Orderable.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
