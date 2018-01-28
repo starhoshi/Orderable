@@ -76,14 +76,14 @@ public protocol OrderProtocol: class {
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 }
 
-//public extension OrderProtocol where Self: Object {
-//    public func payOrder(_ block: ((Error?) -> Void)? = nil) {
-//        amount = 100
-//        update { error in
-//            block?(error)
-//        }
-//    }
-//}
+public extension OrderProtocol where Self: Object {
+    public func pay(_ block: ((Error?) -> Void)? = nil) {
+        amount = 100
+        update { error in
+            block?(error)
+        }
+    }
+}
 
 public enum OrderShopStatus: Int {
     case unknown = 0
@@ -107,30 +107,6 @@ public protocol OrderShopProtocol {
 
     /// 冗長化
     var user: Reference<OrderableUser> { get set }
-
-//    override func encode(_ key: String, value: Any?) -> Any? {
-//        switch key {
-//        case (\Firebase.OrderShop.snapshotShop)._kvcKeyPathString!:
-//            return snapshotShop?.value
-//        case (\Firebase.OrderShop.status)._kvcKeyPathString!:
-//            return status.rawValue
-//        default:
-//            return nil
-//        }
-//    }
-//
-//    override func decode(_ key: String, value: Any?) -> Bool {
-//        switch key {
-//        case (\Firebase.OrderShop.snapshotShop)._kvcKeyPathString!:
-//            snapshotShop = Firebase.Shop(id: key, value: value as! [AnyHashable: Any])
-//            return true
-//        case (\Firebase.OrderShop.status)._kvcKeyPathString!:
-//            status = (value as? Int).flatMap(Status.init(rawValue:)) ?? .unknown
-//            return true
-//        default:
-//            return false
-//        }
-//    }
 }
 
 public protocol OrderSKUProtocol: class {

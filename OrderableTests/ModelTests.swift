@@ -100,7 +100,7 @@ class ModelTests: XCTestCase {
         order.expirationDate = 100
         order.stripeChargeID = "charge"
         order.currency = "jpy"
-        order.status = OrderStatus.created.rawValue
+        order.status = OrderStatus.unknown.rawValue
 
         order.save { ref, error in
             order.stripeCardID = "new_card_id"
@@ -109,7 +109,7 @@ class ModelTests: XCTestCase {
             order.expirationDate = 5678
             order.stripeChargeID = "new_charge"
             order.currency = "us"
-            order.status = OrderStatus.paymentRequested.rawValue
+            order.status = OrderStatus.created.rawValue
 
             order.update { error in
                 Order.get(ref!.documentID, block: { updatedOrder, error in
@@ -128,4 +128,24 @@ class ModelTests: XCTestCase {
 
         wait(for: [expectation], timeout: 10)
     }
+
+    // TODO: order.status is not updated
+//    func testOrderPay() {
+//        let expectation: XCTestExpectation = XCTestExpectation(description: "update order")
+//
+//        let order = Order()
+//        order.status = OrderStatus.created.rawValue
+//
+//        order.save { ref, error in
+//            order.pay { error in
+//                Order.get(ref!.documentID, block: { updatedOrder, error in
+//                    XCTAssertNotNil(updatedOrder)
+//                    XCTAssertEqual(updatedOrder?.status, OrderStatus.paymentRequested.rawValue)
+//                    expectation.fulfill()
+//                })
+//            }
+//        }
+//
+//        wait(for: [expectation], timeout: 10)
+//    }
 }
