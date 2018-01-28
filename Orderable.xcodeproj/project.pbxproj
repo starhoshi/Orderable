@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		32341016201DA22900F0E41A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643934201D8BF4005A313E /* Model.swift */; };
 		32341018201DA45E00F0E41A /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32341017201DA45E00F0E41A /* TestHelper.swift */; };
-		32643929201D88F9005A313E /* OrderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643928201D88F9005A313E /* OrderableTests.swift */; };
+		32643929201D88F9005A313E /* OrderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643928201D88F9005A313E /* OrderTests.swift */; };
 		3264392B201D88F9005A313E /* Orderable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C3E23B201AC21E00E37A89 /* Orderable.framework */; };
 		32643931201D89FE005A313E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32E76D3D201AC79B005B705E /* GoogleService-Info.plist */; };
 		32643938201D92AA005A313E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643934201D8BF4005A313E /* Model.swift */; };
+		32A38F60201DAF9900877B1F /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32A38F5F201DAF9900877B1F /* ModelTests.swift */; };
 		32C3E240201AC21E00E37A89 /* Orderable.h in Headers */ = {isa = PBXBuildFile; fileRef = 32C3E23E201AC21E00E37A89 /* Orderable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32C3E24D201AC25A00E37A89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C3E24C201AC25A00E37A89 /* AppDelegate.swift */; };
 		32C3E24F201AC25A00E37A89 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C3E24E201AC25A00E37A89 /* ViewController.swift */; };
@@ -43,9 +44,10 @@
 		2D396AA5EDE429C0BBCF8722 /* Pods-Orderable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orderable.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Orderable/Pods-Orderable.debug.xcconfig"; sourceTree = "<group>"; };
 		32341017201DA45E00F0E41A /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		32643926201D88F9005A313E /* OrderableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		32643928201D88F9005A313E /* OrderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderableTests.swift; sourceTree = "<group>"; };
+		32643928201D88F9005A313E /* OrderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTests.swift; sourceTree = "<group>"; };
 		3264392A201D88F9005A313E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32643934201D8BF4005A313E /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		32A38F5F201DAF9900877B1F /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		32C3E23B201AC21E00E37A89 /* Orderable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Orderable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C3E23E201AC21E00E37A89 /* Orderable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Orderable.h; sourceTree = "<group>"; };
 		32C3E23F201AC21E00E37A89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,9 +100,10 @@
 		32643927201D88F9005A313E /* OrderableTests */ = {
 			isa = PBXGroup;
 			children = (
-				32643928201D88F9005A313E /* OrderableTests.swift */,
+				32643928201D88F9005A313E /* OrderTests.swift */,
 				32341017201DA45E00F0E41A /* TestHelper.swift */,
 				3264392A201D88F9005A313E /* Info.plist */,
+				32A38F5F201DAF9900877B1F /* ModelTests.swift */,
 			);
 			path = OrderableTests;
 			sourceTree = "<group>";
@@ -512,8 +515,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				32341018201DA45E00F0E41A /* TestHelper.swift in Sources */,
-				32643929201D88F9005A313E /* OrderableTests.swift in Sources */,
+				32643929201D88F9005A313E /* OrderTests.swift in Sources */,
 				32341016201DA22900F0E41A /* Model.swift in Sources */,
+				32A38F60201DAF9900877B1F /* ModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

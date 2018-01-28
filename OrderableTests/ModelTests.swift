@@ -1,5 +1,5 @@
 //
-//  OrderableTests.swift
+//  ModelTests.swift
 //  OrderableTests
 //
 //  Created by kensuke-hoshikawa on 2018/01/28.
@@ -8,18 +8,16 @@
 
 import XCTest
 import Orderable
-import FirebaseFirestore
-import FirebaseStorage
 import FirebaseCore
 
-class OrderableTests: XCTestCase {
+class ModelTests: XCTestCase {
+
     override func setUp() {
         super.setUp()
         _ = FirebaseTest.shared
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
