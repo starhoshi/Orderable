@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        NSSetUncaughtExceptionHandler { exception in
+            debugPrint(exception.name)
+            debugPrint(exception.reason ?? "")
+            debugPrint(exception.callStackSymbols)
+        }
+
+        FirebaseApp.configure()
+
         return true
     }
 

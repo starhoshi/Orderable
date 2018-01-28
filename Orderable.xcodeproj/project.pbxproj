@@ -15,6 +15,7 @@
 		32C3E257201AC25A00E37A89 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32C3E255201AC25A00E37A89 /* LaunchScreen.storyboard */; };
 		32E76D3B201AC4D1005B705E /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E76D3A201AC4D1005B705E /* Order.swift */; };
 		32E76D3C201AC629005B705E /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E76D3A201AC4D1005B705E /* Order.swift */; };
+		32E76D3E201AC79B005B705E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32E76D3D201AC79B005B705E /* GoogleService-Info.plist */; };
 		3D84E94A4CD10C5904BBF9F9 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A8C3E2E70BEA037094F82A9 /* Pods_Demo.framework */; };
 		932F8AB92646499558E2242A /* Pods_Orderable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC9474DAC12B8F1AAAD185A /* Pods_Orderable.framework */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		32C3E256201AC25A00E37A89 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		32C3E258201AC25A00E37A89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32E76D3A201AC4D1005B705E /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		32E76D3D201AC79B005B705E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8A8C3E2E70BEA037094F82A9 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC9474DAC12B8F1AAAD185A /* Pods_Orderable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Orderable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B043654CE00E07D4C6417852 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				32C3E250201AC25A00E37A89 /* Main.storyboard */,
 				32C3E253201AC25A00E37A89 /* Assets.xcassets */,
 				32C3E255201AC25A00E37A89 /* LaunchScreen.storyboard */,
+				32E76D3D201AC79B005B705E /* GoogleService-Info.plist */,
 				32C3E258201AC25A00E37A89 /* Info.plist */,
 			);
 			path = Demo;
@@ -229,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C3E257201AC25A00E37A89 /* LaunchScreen.storyboard in Resources */,
+				32E76D3E201AC79B005B705E /* GoogleService-Info.plist in Resources */,
 				32C3E254201AC25A00E37A89 /* Assets.xcassets in Resources */,
 				32C3E252201AC25A00E37A89 /* Main.storyboard in Resources */,
 			);
@@ -510,7 +514,7 @@
 				INFOPLIST_FILE = Orderable/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.star--hoshi.Orderable";
+				PRODUCT_BUNDLE_IDENTIFIER = com.starhoshi.Orderable;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -534,7 +538,7 @@
 				INFOPLIST_FILE = Orderable/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.star--hoshi.Orderable";
+				PRODUCT_BUNDLE_IDENTIFIER = com.starhoshi.Orderable;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -552,7 +556,7 @@
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.star--hoshi.Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.starhoshi.Orderable.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -569,7 +573,7 @@
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.star--hoshi.Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = com.starhoshi.Orderable.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
