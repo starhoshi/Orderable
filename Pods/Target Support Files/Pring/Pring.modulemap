@@ -1,6 +1,0 @@
-framework module Pring {
-  umbrella header "Pring-umbrella.h"
-
-  export *
-  module * { export * }
-}

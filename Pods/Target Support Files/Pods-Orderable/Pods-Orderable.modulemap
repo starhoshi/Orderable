@@ -1,6 +1,0 @@
-framework module Pods_Orderable {
-  umbrella header "Pods-Orderable-umbrella.h"
-
-  export *
-  module * { export * }
-}
