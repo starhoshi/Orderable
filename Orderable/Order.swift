@@ -10,12 +10,13 @@ import Foundation
 import Firebase
 import Pring
 
-public typealias OrderableUser = UserProtocol & Document
-public typealias OrderableShop = ShopProtocol & Document
-public typealias OrderableProduct = ProductProtocol & Document
-public typealias OrderableSKU = SKUProtocol & Document
-public typealias OrderableOrder = OrderProtocol & Document
-public typealias OrderableOrderSKU = OrderSKUProtocol & Document
+public typealias UserDocument = UserProtocol & Document
+public typealias ShopDocument = ShopProtocol & Document
+public typealias ProductDocument = ProductProtocol & Document
+public typealias SKUDocument = SKUProtocol & Document
+public typealias OrderDocument = OrderProtocol & Document
+public typealias OrderShopDocument = OrderShopProtocol & Document
+public typealias OrderSKUDocument = OrderSKUProtocol & Document
 
 public protocol UserProtocol: class {
     var stripeCustomerID: String? { get set }
@@ -54,10 +55,10 @@ public enum OrderStatus: Int {
 }
 
 public protocol OrderProtocol: class {
-    associatedtype User: OrderableUser
-    associatedtype OrderSKU: OrderableOrderSKU
+    associatedtype OrderableUser: UserDocument
+    associatedtype OrderableOrderSKU: OrderSKUDocument
 
-    var user: Reference<User> { get set }
+    var user: Reference<OrderableUser> { get set }
 
     /// ストライプに登録したカード情報。このカードIDで決済を行う
     var stripeCardID: String? { get set }
@@ -73,17 +74,17 @@ public protocol OrderProtocol: class {
     var status: OrderStatus { get set }
     var stripeChargeID: String? { get set }
     var currency: String? { get set }
-    var orderSKUs: ReferenceCollection<OrderSKU> { get set }
+    var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 }
 
-public extension OrderProtocol where Self: Object {
-    public func payOrder(_ block: ((Error?) -> Void)? = nil) {
-        amount = 100
-        update { error in
-            block?(error)
-        }
-    }
-}
+//public extension OrderProtocol where Self: Object {
+//    public func payOrder(_ block: ((Error?) -> Void)? = nil) {
+//        amount = 100
+//        update { error in
+//            block?(error)
+//        }
+//    }
+//}
 
 public enum OrderShopStatus: Int {
     case unknown = 0
@@ -93,24 +94,22 @@ public enum OrderShopStatus: Int {
     case received = 4 // (customerが)受け取り済
 }
 
-public protocol OrderShop {
-
-
-    associatedtype User: OrderableUser
-    associatedtype Order: OrderableOrder
-    associatedtype OrderSKU: OrderableOrderSKU
+public protocol OrderShopProtocol {
+    associatedtype OrderableUser: UserDocument
+//    associatedtype OrderableOrder: OrderDocument
+    associatedtype OrderableOrderSKU: OrderSKUDocument
 
     /// parent
-    var order: Reference<Order> { get set }
+//    var order: Reference<OrderableOrder> { get set }
 
     /// 購入された商品
-    var orderSKUs: ReferenceCollection<OrderSKU> { get set }
+    var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 
     /// 配送ステータス
     var status: OrderShopStatus { get set }
 
     /// 冗長化
-    var user: Reference<User> { get set }
+    var user: Reference<OrderableUser> { get set }
 
 //    override func encode(_ key: String, value: Any?) -> Any? {
 //        switch key {
@@ -138,13 +137,12 @@ public protocol OrderShop {
 }
 
 public protocol OrderSKUProtocol: class {
-    associatedtype SKU: OrderableSKU
-    associatedtype Shop: OrderableShop
+    associatedtype OrderableSKU: SKUDocument
+    associatedtype OrderableShop: ShopDocument
 
-    var orderShop: Reference<Shop> { get set }
-    var snapshotSKU: SKUProtocol { get set }
-    var snapshotProduct: ProductProtocol { get set }
+    var snapshotSKU: SKUProtocol? { get set }
+    var snapshotProduct: ProductProtocol? { get set }
     var quantity: Int { get set }
-    var sku: Reference<SKU> { get set }
-    var shop: Reference<Shop> { get set }
+    var sku: Reference<OrderableSKU> { get set }
+    var shop: Reference<OrderableShop> { get set }
 }

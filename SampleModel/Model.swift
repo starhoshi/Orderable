@@ -37,10 +37,57 @@ public class SKU: Object, SKUProtocol {
 }
 
 @objcMembers
-public class Order: Object, OrderProtocol {
-    public typealias User = Demo.User
+class Order: Object, OrderProtocol {
+    typealias OrderableUser = User
+    typealias OrderableOrderSKU = OrderSKU
 
-//    public typealias OrderSKU = 
+    dynamic var user: Reference<OrderableUser> = .init()
+
+    /// ストライプに登録したカード情報。このカードIDで決済を行う
+    dynamic var stripeCardID: String?
+
+    /// 総計
+    dynamic var amount: Int = 0
+
+    /// 支払いが行われた日時
+    dynamic var paidDate: TimeInterval = 0
+
+    /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
+    dynamic var expirationDate: TimeInterval = 0
+    dynamic var status: OrderStatus = .unknown
+    dynamic var stripeChargeID: String?
+    dynamic var currency: String?
+    dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
+}
+
+
+@objcMembers
+class OrderShop: Object, OrderShopProtocol {
+    typealias OrderableUser = User
+    typealias OrderableOrder = Order
+    typealias OrderableOrderSKU = OrderSKU
+
+    dynamic var order: Reference<OrderableOrder> = .init()
+
+    /// 購入された商品
+    dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
+
+    /// 配送ステータス
+    dynamic var status: OrderShopStatus = .unknown
+
+    /// 冗長化
+    dynamic var user: Reference<OrderableUser> = .init()
 
 }
 
+@objcMembers
+class OrderSKU: Object, OrderSKUProtocol {
+    typealias OrderableSKU = SKU
+    typealias OrderableShop = Shop
+
+    dynamic var snapshotSKU: SKUProtocol?
+    dynamic var snapshotProduct: ProductProtocol?
+    dynamic var quantity: Int = 0
+    dynamic var sku: Reference<OrderableSKU> = .init()
+    dynamic var shop: Reference<OrderableShop> = .init()
+}
