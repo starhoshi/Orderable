@@ -1,19 +1,27 @@
 platform :ios, '11.0'
 
-target 'Demo' do
-  use_frameworks!
-
+def shared_pods
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
   pod 'Pring'
+end
+
+target 'Demo' do
+  use_frameworks!
+
+  shared_pods
 end
 
 target 'Orderable' do
   use_frameworks!
 
-  pod 'Firebase/Core'
-  pod 'Firebase/Firestore'
-  pod 'Firebase/Storage'
-  pod 'Pring'
+  shared_pods
 end
+
+target 'OrderableTests' do
+  use_frameworks!
+
+  shared_pods
+end
+
