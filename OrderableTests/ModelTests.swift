@@ -30,7 +30,7 @@ class ModelTests: XCTestCase {
         user.save { ref, error in
             User.get(ref!.documentID, block: { savedUser, error in
                 XCTAssertNotNil(savedUser)
-                XCTAssertEqual(savedUser?.stripeCustomerID, "cus_test")
+                XCTAssertEqual(savedUser?.stripeCustomerID, user.stripeCustomerID)
                 expectation.fulfill()
             })
         }
@@ -48,7 +48,7 @@ class ModelTests: XCTestCase {
             user.update { error in
                 User.get(ref!.documentID, block: { updatedUser, error in
                     XCTAssertNotNil(updatedUser)
-                    XCTAssertEqual(updatedUser?.stripeCustomerID, "cus_test_updated")
+                    XCTAssertEqual(updatedUser?.stripeCustomerID, user.stripeCustomerID)
                     expectation.fulfill()
                 })
             }
@@ -66,23 +66,64 @@ class ModelTests: XCTestCase {
         order.amount = 1000
         order.paidDate = 10
         order.expirationDate = 100
-        order.status = .created
         order.stripeChargeID = "charge"
         order.currency = "jpy"
+        order.status = OrderStatus.created.rawValue
 
         order.save { ref, error in
             Order.get(ref!.documentID, block: { savedOrder, error in
                 XCTAssertNotNil(savedOrder)
                 XCTAssertEqual(savedOrder?.user.id, user.id)
-                XCTAssertEqual(savedOrder?.stripeCardID, "card_id")
-                XCTAssertEqual(savedOrder?.amount, 1000)
-                XCTAssertEqual(savedOrder?.paidDate, 10)
-                XCTAssertEqual(savedOrder?.expirationDate, 100)
-                XCTAssertEqual(savedOrder?.status, .created)
-                XCTAssertEqual(savedOrder?.stripeChargeID, "charge")
-                XCTAssertEqual(savedOrder?.currency, "jpy")
+                XCTAssertEqual(savedOrder?.stripeCardID, order.stripeCardID)
+                XCTAssertEqual(savedOrder?.amount, order.amount)
+                XCTAssertEqual(savedOrder?.paidDate, order.paidDate)
+                XCTAssertEqual(savedOrder?.expirationDate, order.expirationDate)
+                XCTAssertEqual(savedOrder?.stripeChargeID, order.stripeChargeID)
+                XCTAssertEqual(savedOrder?.currency, order.currency)
+                XCTAssertEqual(savedOrder?.status, order.status)
                 expectation.fulfill()
             })
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testUpdaterder() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "update order")
+
+        let user = User()
+        let order = Order()
+        order.user.set(user)
+        order.stripeCardID = "card_id"
+        order.amount = 1000
+        order.paidDate = 10
+        order.expirationDate = 100
+        order.stripeChargeID = "charge"
+        order.currency = "jpy"
+        order.status = OrderStatus.created.rawValue
+
+        order.save { ref, error in
+            order.stripeCardID = "new_card_id"
+            order.amount = 111111
+            order.paidDate = 1234
+            order.expirationDate = 5678
+            order.stripeChargeID = "new_charge"
+            order.currency = "us"
+            order.status = OrderStatus.paymentRequested.rawValue
+
+            order.update { error in
+                Order.get(ref!.documentID, block: { updatedOrder, error in
+                    XCTAssertNotNil(updatedOrder)
+                    XCTAssertEqual(updatedOrder?.stripeCardID, order.stripeCardID)
+                    XCTAssertEqual(updatedOrder?.amount, order.amount)
+                    XCTAssertEqual(updatedOrder?.paidDate, order.paidDate)
+                    XCTAssertEqual(updatedOrder?.expirationDate, order.expirationDate)
+                    XCTAssertEqual(updatedOrder?.stripeChargeID, order.stripeChargeID)
+                    XCTAssertEqual(updatedOrder?.currency, order.currency)
+                    XCTAssertEqual(updatedOrder?.status, order.status)
+                    expectation.fulfill()
+                })
+            }
         }
 
         wait(for: [expectation], timeout: 10)

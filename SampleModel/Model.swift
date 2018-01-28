@@ -30,7 +30,7 @@ public class Product: Object, ProductProtocol {
 @objcMembers
 public class SKU: Object, SKUProtocol {
     public dynamic var price: Int = 0
-    public dynamic var stockType: OrderStatus = .unknown
+    public dynamic var stockType: StockType = .unknown
     public dynamic var stock: Int = 0
     public dynamic var isPublished: Bool = true
     public dynamic var isActive: Bool = true
@@ -54,9 +54,9 @@ class Order: Object, OrderProtocol {
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
     dynamic var expirationDate: TimeInterval = 0
-    dynamic var status: OrderStatus = .unknown
     dynamic var stripeChargeID: String?
     dynamic var currency: String?
+    dynamic var status: Int = OrderStatus.unknown.rawValue
     dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
 }
 
@@ -73,7 +73,7 @@ class OrderShop: Object, OrderShopProtocol {
     dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
 
     /// 配送ステータス
-    dynamic var status: OrderShopStatus = .unknown
+    dynamic var status: Int = OrderShopStatus.unknown.rawValue
 
     /// 冗長化
     dynamic var user: Reference<OrderableUser> = .init()

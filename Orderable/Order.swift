@@ -39,7 +39,6 @@ public enum StockType: String, Decodable {
 }
 public protocol SKUProtocol: class {
     var price: Int { get set }
-    var stockType: OrderStatus { get set }
     var stock: Int { get set }
     var isPublished: Bool { get set }
     var isActive: Bool { get set }
@@ -71,7 +70,7 @@ public protocol OrderProtocol: class {
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
     var expirationDate: TimeInterval { get set }
-    var status: OrderStatus { get set }
+    var status: Int { get set }
     var stripeChargeID: String? { get set }
     var currency: String? { get set }
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
@@ -90,8 +89,6 @@ public enum OrderShopStatus: Int {
     case unknown = 0
     case created = 1 // オーダー作成が完了したが支払いが行われていない
     case paid = 2 // 支払いが行われ発送待ち
-    case delivered = 3 // 発送済
-    case received = 4 // (customerが)受け取り済
 }
 
 public protocol OrderShopProtocol {
@@ -106,7 +103,7 @@ public protocol OrderShopProtocol {
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 
     /// 配送ステータス
-    var status: OrderShopStatus { get set }
+    var status: Int { get set }
 
     /// 冗長化
     var user: Reference<OrderableUser> { get set }
