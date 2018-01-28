@@ -13,19 +13,47 @@ import FirebaseStorage
 import FirebaseCore
 
 class OrderableTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
-        FirebaseApp.configure()
+        _ = FirebaseTest.shared
     }
-    
+
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+    func testSaveUser() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "save user")
+
+        let user = User()
+        user.stripeCustomerID = "cus_test"
+
+        user.save { ref, error in
+            User.get(ref!.documentID, block: { savedUser, error in
+                XCTAssertNotNil(savedUser)
+                XCTAssertEqual(savedUser?.stripeCustomerID, "cus_test")
+                expectation.fulfill()
+            })
+        }
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testUpdateUser() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "update user")
+
+        let user = User()
+        user.stripeCustomerID = "cus_test_updated"
+
+        user.save { ref, error in
+            user.update { error in
+                User.get(ref!.documentID, block: { updatedUser, error in
+                    XCTAssertNotNil(updatedUser)
+                    XCTAssertEqual(updatedUser?.stripeCustomerID, "cus_test_updated")
+                    expectation.fulfill()
+                })
+            }
+        }
+        wait(for: [expectation], timeout: 10)
     }
 }

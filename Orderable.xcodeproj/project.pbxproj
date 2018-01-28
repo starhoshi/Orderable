@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32341016201DA22900F0E41A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643934201D8BF4005A313E /* Model.swift */; };
+		32341018201DA45E00F0E41A /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32341017201DA45E00F0E41A /* TestHelper.swift */; };
 		32643929201D88F9005A313E /* OrderableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643928201D88F9005A313E /* OrderableTests.swift */; };
 		3264392B201D88F9005A313E /* Orderable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32C3E23B201AC21E00E37A89 /* Orderable.framework */; };
 		32643931201D89FE005A313E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32E76D3D201AC79B005B705E /* GoogleService-Info.plist */; };
-		32643937201D8C2F005A313E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643934201D8BF4005A313E /* Model.swift */; };
 		32643938201D92AA005A313E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32643934201D8BF4005A313E /* Model.swift */; };
 		32C3E240201AC21E00E37A89 /* Orderable.h in Headers */ = {isa = PBXBuildFile; fileRef = 32C3E23E201AC21E00E37A89 /* Orderable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		32C3E24D201AC25A00E37A89 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C3E24C201AC25A00E37A89 /* AppDelegate.swift */; };
@@ -40,6 +41,7 @@
 		164278DDA79E05174CB66A35 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		19F9E5359BE58DBC9F61A543 /* Pods-Orderable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orderable.release.xcconfig"; path = "Pods/Target Support Files/Pods-Orderable/Pods-Orderable.release.xcconfig"; sourceTree = "<group>"; };
 		2D396AA5EDE429C0BBCF8722 /* Pods-Orderable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Orderable.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Orderable/Pods-Orderable.debug.xcconfig"; sourceTree = "<group>"; };
+		32341017201DA45E00F0E41A /* TestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		32643926201D88F9005A313E /* OrderableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32643928201D88F9005A313E /* OrderableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderableTests.swift; sourceTree = "<group>"; };
 		3264392A201D88F9005A313E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				32643928201D88F9005A313E /* OrderableTests.swift */,
+				32341017201DA45E00F0E41A /* TestHelper.swift */,
 				3264392A201D88F9005A313E /* Info.plist */,
 			);
 			path = OrderableTests;
@@ -508,8 +511,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32341018201DA45E00F0E41A /* TestHelper.swift in Sources */,
 				32643929201D88F9005A313E /* OrderableTests.swift in Sources */,
-				32643937201D8C2F005A313E /* Model.swift in Sources */,
+				32341016201DA22900F0E41A /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
