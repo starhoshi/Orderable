@@ -111,9 +111,12 @@ public protocol OrderShopProtocol {
 public protocol OrderSKUProtocol: class {
     associatedtype OrderableSKU: SKUDocument
     associatedtype OrderableShop: ShopDocument
+    associatedtype SnapshotSKU: SKUProtocol
+    associatedtype SnapshotProduct: ProductProtocol
 
-    var snapshotSKU: SKUProtocol? { get set }
-    var snapshotProduct: ProductProtocol? { get set }
+
+    var snapshotSKU: SnapshotSKU? { get set }
+    var snapshotProduct: SnapshotProduct? { get set }
     var quantity: Int { get set }
     var sku: Reference<OrderableSKU> { get set }
     var shop: Reference<OrderableShop> { get set }

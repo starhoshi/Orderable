@@ -88,12 +88,38 @@ class OrderShop: Object, OrderShopProtocol {
 class OrderSKU: Object, OrderSKUProtocol {
     typealias OrderableSKU = SKU
     typealias OrderableShop = Shop
+    typealias SnapshotSKU = SKU
+    typealias SnapshotProduct = Product
 
-    dynamic var snapshotSKU: SKUProtocol?
-    dynamic var snapshotProduct: ProductProtocol?
+    dynamic var snapshotSKU: SnapshotSKU?
+    dynamic var snapshotProduct: SnapshotProduct?
     dynamic var quantity: Int = 1
     dynamic var sku: Reference<OrderableSKU> = .init()
     dynamic var shop: Reference<OrderableShop> = .init()
+
+    override func encode(_ key: String, value: Any?) -> Any? {
+        switch key {
+        case (\OrderSKU.snapshotSKU)._kvcKeyPathString!:
+            return snapshotSKU?.value
+        case (\OrderSKU.snapshotProduct)._kvcKeyPathString!:
+            return snapshotProduct?.value
+        default:
+            return nil
+        }
+    }
+
+    override func decode(_ key: String, value: Any?) -> Bool {
+        switch key {
+        case (\OrderSKU.snapshotSKU)._kvcKeyPathString!:
+            snapshotSKU = SKU(id: key, value: value as! [AnyHashable : Any])
+            return true
+        case (\OrderSKU.snapshotProduct)._kvcKeyPathString!:
+            snapshotProduct = Product(id: key, value: value as! [AnyHashable : Any])
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - for test
