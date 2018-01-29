@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name               = "Orderable"
-  s.version            = "0.1.1"
+  s.version            = "0.1.2"
   s.summary            = "Orderable"
   s.description        = "Orderable can be paid using firebase and stripe."
   s.homepage           = "https://github.com/starhoshi/Orderable"
