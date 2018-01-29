@@ -95,3 +95,68 @@ class OrderSKU: Object, OrderSKUProtocol {
     dynamic var sku: Reference<OrderableSKU> = .init()
     dynamic var shop: Reference<OrderableShop> = .init()
 }
+
+// MARK: - for test
+
+class Model {
+    static func setup(stripeCustomerID: String = "cus_CC65RZ8Gf6zi7V", stripeCardID: String = "card_1BnhthKZcOra3JxsKaxABsRj", amount: Int = 1000, callback: @escaping (Order) -> Void) {
+        var user: User?
+        var shop: Shop?
+        var product: Product?
+        var sku: SKU?
+        var order: Order?
+        var orderShop: OrderShop?
+        var orderSKU: OrderSKU?
+
+        func fulfill() {
+            if user != nil, shop != nil, product != nil, sku != nil, order != nil, orderShop != nil, orderSKU != nil {
+                order?.orderSKUs.insert(orderSKU!)
+                order?.update { orderError in
+                    orderShop?.orderSKUs.insert(orderSKU!)
+                    orderShop?.update { orderShopError in
+                        if orderError == nil, orderShopError == nil { callback(order!) }
+                    }
+                }
+            }
+        }
+
+        let newUser = User()
+        newUser.stripeCustomerID = stripeCustomerID
+        newUser.save { _, _ in
+            user = newUser; fulfill()
+        }
+        let newShop = Shop()
+        newShop.save { _, _ in
+            shop = newShop; fulfill()
+        }
+        let newProduct = Product()
+        newProduct.save { _, _ in
+            product = newProduct; fulfill()
+        }
+        let newSKU = SKU()
+        newSKU.save { _, _ in
+            sku = newSKU; fulfill()
+        }
+        let newOrder = Order()
+        newOrder.user.set(newUser)
+        newOrder.amount = amount
+        newOrder.stripeCardID = stripeCardID
+        newOrder.save { _, _ in
+            order = newOrder; fulfill()
+        }
+        let newOrderShop = OrderShop()
+        newOrderShop.order.set(newOrder)
+        newOrderShop.user.set(newUser)
+        newOrderShop.save { _, _ in
+            orderShop = newOrderShop; fulfill()
+        }
+        let newOrderSKU = OrderSKU()
+        newOrderSKU.sku.set(newSKU)
+        newOrderSKU.shop.set(newShop)
+        newOrderSKU.snapshotSKU = newSKU
+        newOrderSKU.snapshotProduct = newProduct
+        newOrderSKU.save { _, _ in
+            orderSKU = newOrderSKU; fulfill()
+        }
+    }
+}
