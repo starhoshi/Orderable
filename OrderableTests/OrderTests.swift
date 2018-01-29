@@ -97,7 +97,7 @@ class OrderableTests: XCTestCase {
         order?.status = OrderStatus.paymentRequested.rawValue
         order?.update()
         disposer = Order.listen(order!.id) { o, e in
-            if let o = o, o.stripeChargeID != nil {
+            if o?.stripeChargeID != nil {
                 expectation.fulfill()
             }
         }
