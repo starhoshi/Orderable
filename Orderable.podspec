@@ -13,9 +13,6 @@ Pod::Spec.new do |s|
   s.requires_arc       = true
   s.static_framework   = true
 
-  s.dependency "Firebase/Core"
-  s.dependency "Firebase/Firestore"
-  s.dependency "Firebase/Storage"
   s.dependency "Pring"
 end
 
