@@ -37,7 +37,8 @@ class OrderableTests: XCTestCase {
     func testPayOrder() {
         let expectation: XCTestExpectation = XCTestExpectation(description: "pay order")
 
-        order?.status = OrderStatus.paymentRequested.rawValue
+        order?.paymentStatus = .paymentRequested
+        order?.status = .paymentRequested
         order?.update()
         disposer = Order.listen(order!.id) { o, e in
             if o?.stripeChargeID != nil {

@@ -68,7 +68,7 @@ class ModelTests: XCTestCase {
         order.expirationDate = 100
         order.stripeChargeID = "charge"
         order.currency = "jpy"
-        order.status = OrderStatus.created.rawValue
+        order.paymentStatus = .created
 
         order.save { ref, error in
             Order.get(ref!.documentID, block: { savedOrder, error in
@@ -80,7 +80,7 @@ class ModelTests: XCTestCase {
                 XCTAssertEqual(savedOrder?.expirationDate, order.expirationDate)
                 XCTAssertEqual(savedOrder?.stripeChargeID, order.stripeChargeID)
                 XCTAssertEqual(savedOrder?.currency, order.currency)
-                XCTAssertEqual(savedOrder?.status, order.status)
+                XCTAssertEqual(savedOrder?.paymentStatus, order.paymentStatus)
                 expectation.fulfill()
             })
         }
@@ -100,7 +100,7 @@ class ModelTests: XCTestCase {
         order.expirationDate = 100
         order.stripeChargeID = "charge"
         order.currency = "jpy"
-        order.status = OrderStatus.unknown.rawValue
+        order.paymentStatus = .unknown
 
         order.save { ref, error in
             order.stripeCardID = "new_card_id"
@@ -109,7 +109,7 @@ class ModelTests: XCTestCase {
             order.expirationDate = 5678
             order.stripeChargeID = "new_charge"
             order.currency = "us"
-            order.status = OrderStatus.created.rawValue
+            order.paymentStatus = .created
 
             order.update { error in
                 Order.get(ref!.documentID, block: { updatedOrder, error in
@@ -120,7 +120,7 @@ class ModelTests: XCTestCase {
                     XCTAssertEqual(updatedOrder?.expirationDate, order.expirationDate)
                     XCTAssertEqual(updatedOrder?.stripeChargeID, order.stripeChargeID)
                     XCTAssertEqual(updatedOrder?.currency, order.currency)
-                    XCTAssertEqual(updatedOrder?.status, order.status)
+                    XCTAssertEqual(updatedOrder?.paymentStatus, order.paymentStatus)
                     expectation.fulfill()
                 })
             }

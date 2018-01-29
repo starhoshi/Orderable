@@ -56,7 +56,6 @@ class Order: Object, OrderProtocol {
     dynamic var expirationDate: TimeInterval = 0
     dynamic var stripeChargeID: String? = nil
     dynamic var currency: String? = "jpy"
-    dynamic var status: Int = OrderStatus.created.rawValue
     dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
 
     /// for Komerco
@@ -64,6 +63,33 @@ class Order: Object, OrderProtocol {
     dynamic var postage: Int = 0
     dynamic var prefectureID: Int = 0
     dynamic var regionID: Int = 0
+
+    dynamic var paymentStatus: OrderPaymentStatus = .unknown
+    dynamic var status: OrderPaymentStatus = .unknown
+
+    override func encode(_ key: String, value: Any?) -> Any? {
+        switch key {
+        case (\Order.paymentStatus)._kvcKeyPathString!:
+            return paymentStatus.rawValue
+        case (\Order.status)._kvcKeyPathString!:
+            return status.rawValue
+        default:
+            return nil
+        }
+    }
+
+    override func decode(_ key: String, value: Any?) -> Bool {
+        switch key {
+        case (\Order.paymentStatus)._kvcKeyPathString!:
+            paymentStatus = (value as? Int).flatMap(OrderPaymentStatus.init(rawValue:)) ?? .unknown
+            return true
+        case (\Order.status)._kvcKeyPathString!:
+            status = (value as? Int).flatMap(OrderPaymentStatus.init(rawValue:)) ?? .unknown
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 @objcMembers
@@ -77,11 +103,29 @@ class OrderShop: Object, OrderShopProtocol {
     /// 購入された商品
     dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
 
-    /// 配送ステータス
-    dynamic var status: Int = OrderShopStatus.created.rawValue
+    dynamic var paymentStatus: OrderShopPaymentStatus = .unknown
 
     /// 冗長化
     dynamic var user: Reference<OrderableUser> = .init()
+
+    override func encode(_ key: String, value: Any?) -> Any? {
+        switch key {
+        case (\OrderShop.paymentStatus)._kvcKeyPathString!:
+            return paymentStatus.rawValue
+        default:
+            return nil
+        }
+    }
+
+    override func decode(_ key: String, value: Any?) -> Bool {
+        switch key {
+        case (\OrderShop.paymentStatus)._kvcKeyPathString!:
+            paymentStatus = (value as? Int).flatMap(OrderShopPaymentStatus.init(rawValue:)) ?? .unknown
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 @objcMembers
@@ -111,10 +155,10 @@ class OrderSKU: Object, OrderSKUProtocol {
     override func decode(_ key: String, value: Any?) -> Bool {
         switch key {
         case (\OrderSKU.snapshotSKU)._kvcKeyPathString!:
-            snapshotSKU = SKU(id: key, value: value as! [AnyHashable : Any])
+            snapshotSKU = SKU(id: key, value: value as! [AnyHashable: Any])
             return true
         case (\OrderSKU.snapshotProduct)._kvcKeyPathString!:
-            snapshotProduct = Product(id: key, value: value as! [AnyHashable : Any])
+            snapshotProduct = Product(id: key, value: value as! [AnyHashable: Any])
             return true
         default:
             return false
@@ -186,3 +230,4 @@ class Model {
         }
     }
 }
+

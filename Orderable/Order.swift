@@ -43,13 +43,12 @@ public protocol SKUProtocol: class {
     var isActive: Bool { get set }
 }
 
-
-public enum OrderStatus: Int {
+@objc public enum OrderPaymentStatus: Int {
     case unknown = 0
-    case created = 1 // Order 作成完了したがユーザが同意ボタンをまだ押していない
-    case paymentRequested = 2 // ユーザが購入ボタンに同意した
-    case waitingForPayment = 3 // ユーザが銀行振込などで待ちの状態
-    case paid = 4 // 支払い完了
+    case created = 1
+    case paymentRequested = 2
+    case waitingForPayment = 3
+    case paid = 4
 }
 
 public protocol OrderProtocol: class {
@@ -69,43 +68,41 @@ public protocol OrderProtocol: class {
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
     var expirationDate: TimeInterval { get set }
-    var status: Int { get set }
     var stripeChargeID: String? { get set }
     var currency: String? { get set }
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
+
+    /// customer payment status
+    var paymentStatus: OrderPaymentStatus { get set }
 }
 
 public extension OrderProtocol where Self: Object {
     public func pay(_ block: ((Error?) -> Void)? = nil) {
-        amount = 100
+        paymentStatus = .paymentRequested
         update { error in
             block?(error)
         }
     }
 }
 
-public enum OrderShopStatus: Int {
+@objc public enum OrderShopPaymentStatus: Int {
     case unknown = 0
-    case created = 1 // オーダー作成が完了したが支払いが行われていない
-    case paid = 2 // 支払いが行われ発送待ち
+    case created = 1
+    case paid = 2
 }
 
 public protocol OrderShopProtocol {
     associatedtype OrderableUser: UserDocument
-//    associatedtype OrderableOrder: OrderDocument
     associatedtype OrderableOrderSKU: OrderSKUDocument
-
-    /// parent
-//    var order: Reference<OrderableOrder> { get set }
 
     /// 購入された商品
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 
-    /// 配送ステータス
-    var status: Int { get set }
-
     /// 冗長化
     var user: Reference<OrderableUser> { get set }
+
+    /// customer payment status
+    var paymentStatus: OrderShopPaymentStatus { get set }
 }
 
 public protocol OrderSKUProtocol: class {
@@ -113,7 +110,6 @@ public protocol OrderSKUProtocol: class {
     associatedtype OrderableShop: ShopDocument
     associatedtype SnapshotSKU: SKUProtocol
     associatedtype SnapshotProduct: ProductProtocol
-
 
     var snapshotSKU: SnapshotSKU? { get set }
     var snapshotProduct: SnapshotProduct? { get set }
