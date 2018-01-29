@@ -19,7 +19,7 @@ public class User: Object, UserProtocol {
 public class Shop: Object, ShopProtocol {
     public dynamic var name: String? = "shop_name"
     public dynamic var isActive: Bool = true
-    public dynamic var freePostageMinimunPrice: Int = -1
+    public dynamic var freePostageMinimumPrice: Int = -1
 }
 
 @objcMembers

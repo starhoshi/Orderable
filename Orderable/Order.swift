@@ -24,7 +24,7 @@ public protocol UserProtocol: class {
 public protocol ShopProtocol: class {
     var name: String? { get set }
     var isActive: Bool { get set }
-    var freePostageMinimunPrice: Int { get set }
+    var freePostageMinimumPrice: Int { get set }
 }
 
 public protocol ProductProtocol: class {
