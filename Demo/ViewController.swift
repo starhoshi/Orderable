@@ -10,54 +10,28 @@ import UIKit
 import Pring
 
 class ViewController: UIViewController {
+    @IBOutlet weak var stripeCustomerIDField: UITextField!
+    @IBOutlet weak var stripeCardIDField: UITextField!
+    @IBOutlet weak var resultLabel: UILabel!
+
+    var disposer: Disposer<Order>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-////        let user = Orderable.OoooUser()
-//        let user = User2()
-//        user.stripeCustomerID = "test"
-////        user.name = "name"
-////        user.save { _, _ in
-////            user.payOrder()
-////        }
-//
-//        let order = Order2()
-//        order.user.set(user)
-//        order.save { _, _ in
-//            order.payOrder()
-//        }
+    }
+    @IBAction func didTapOrderButton(_ sender: Any) {
+        Model.setup(stripeCustomerID: stripeCustomerIDField.text!, stripeCardID: stripeCardIDField.text!, amount: 1000) { [weak self] order in
+            order.status = OrderStatus.paymentRequested.rawValue
+            order.update()
+            self?.disposer = Order.listen(order.id) { o, e in
+                if o?.stripeChargeID != nil {
+                    var results: [String] = []
+                    results.append("OrderID: \(order.id)")
+                    results.append("UserID: \(order.user.id ?? "")")
+                    results.append("StripeChargeID: \(o?.stripeChargeID ?? "")")
+                    self?.resultLabel.text = results.joined(separator: "\n")
+                }
+            }
+        }
     }
 }
-
-//@objcMembers
-//public class User2: Object, UserProtocol {
-//    /// Stripe Customer id
-//    public dynamic var stripeCustomerID: String?
-//}
-//
-//@objcMembers
-//public class OrderSKU2: Object, OrderSKUProtocol {
-//    public typealias SKU = <#type#>
-//
-//    public typealias Shop = <#type#>
-//
-//}
-//
-//@objcMembers
-//class Order2: Object, OrderProtocol {
-//    typealias OrderSKU = <#type#>
-//
-//    public typealias User = User2
-//
-//    var user: Reference<User> = .init()
-//    var stripeCardID: String?
-//    var amount: Int = 0
-//    var skuPriceSum: Int = 0
-//    var postage: Int = 0
-//    var paidDate: TimeInterval = 0
-//    var expirationDate: TimeInterval = 0
-//    var status: OrderStatus = .unknown
-//    var stripeChargeID: String?
-//    var currency: String?
-//}
-
