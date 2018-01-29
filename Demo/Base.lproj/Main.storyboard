@@ -63,10 +63,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ooq-UM-hIS" secondAttribute="trailing" constant="16" id="Gbl-eP-njA"/>
                             <constraint firstItem="ooq-UM-hIS" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="R8K-W8-bqC"/>
                             <constraint firstItem="ooq-UM-hIS" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="j7X-CI-03O"/>
                             <constraint firstItem="ooq-UM-hIS" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="vMS-kF-qfS"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ooq-UM-hIS" secondAttribute="trailing" constant="16" id="wPZ-Ue-Xxr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
