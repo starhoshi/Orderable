@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Firebase
 import Pring
 
 public typealias UserDocument = UserProtocol & Document
