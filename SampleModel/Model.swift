@@ -12,7 +12,6 @@ import Orderable
 
 @objcMembers
 public class User: Object, UserProtocol {
-    public dynamic var stripeCustomerID: String? = "cus_CC65RZ8Gf6zi7V"
 }
 
 @objcMembers
@@ -37,14 +36,11 @@ public class SKU: Object, SKUProtocol {
 }
 
 @objcMembers
-class Order: Object, OrderProtocol {
+class Order: Object, StripeChargeProtocol {
     typealias OrderableUser = User
     typealias OrderableOrderSKU = OrderSKU
 
     dynamic var user: Reference<OrderableUser> = .init()
-
-    /// ストライプに登録したカード情報。このカードIDで決済を行う
-    dynamic var stripeCardID: String? = "card_1BnhthKZcOra3JxsKaxABsRj"
 
     /// 総計
     dynamic var amount: Int = 0
@@ -65,14 +61,18 @@ class Order: Object, OrderProtocol {
     dynamic var regionID: Int = 0
 
     dynamic var paymentStatus: OrderPaymentStatus = .unknown
-    dynamic var status: OrderPaymentStatus = .unknown
+    dynamic var paymentAgencyType: PaymentAgencyType = .stripe
+
+    /// ストライプに登録したカード情報。このカードIDで決済を行う
+    dynamic var stripeCardID: String? = "card_1BnhthKZcOra3JxsKaxABsRj"
+    dynamic var stripeCustomerID: String? = "cus_CC65RZ8Gf6zi7V"
 
     override func encode(_ key: String, value: Any?) -> Any? {
         switch key {
         case (\Order.paymentStatus)._kvcKeyPathString!:
             return paymentStatus.rawValue
-        case (\Order.status)._kvcKeyPathString!:
-            return status.rawValue
+        case (\Order.paymentAgencyType)._kvcKeyPathString!:
+            return paymentAgencyType.rawValue
         default:
             return nil
         }
@@ -83,8 +83,8 @@ class Order: Object, OrderProtocol {
         case (\Order.paymentStatus)._kvcKeyPathString!:
             paymentStatus = (value as? Int).flatMap(OrderPaymentStatus.init(rawValue:)) ?? .unknown
             return true
-        case (\Order.status)._kvcKeyPathString!:
-            status = (value as? Int).flatMap(OrderPaymentStatus.init(rawValue:)) ?? .unknown
+        case (\Order.paymentAgencyType)._kvcKeyPathString!:
+            paymentAgencyType = (value as? Int).flatMap(PaymentAgencyType.init(rawValue:)) ?? .unknown
             return true
         default:
             return false
@@ -191,7 +191,6 @@ class Model {
         }
 
         let newUser = User()
-        newUser.stripeCustomerID = stripeCustomerID
         newUser.save { _, _ in
             user = newUser; fulfill()
         }

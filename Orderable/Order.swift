@@ -17,9 +17,7 @@ public typealias OrderDocument = OrderProtocol & Document
 public typealias OrderShopDocument = OrderShopProtocol & Document
 public typealias OrderSKUDocument = OrderSKUProtocol & Document
 
-public protocol UserProtocol: class {
-    var stripeCustomerID: String? { get set }
-}
+public protocol UserProtocol: class { }
 
 public protocol ShopProtocol: class {
     var name: String? { get set }
@@ -38,6 +36,7 @@ public enum StockType: String, Decodable {
 }
 public protocol SKUProtocol: class {
     var price: Int { get set }
+    var stockType: StockType { get set }
     var stock: Int { get set }
     var isPublished: Bool { get set }
     var isActive: Bool { get set }
@@ -51,14 +50,16 @@ public protocol SKUProtocol: class {
     case paid = 4
 }
 
+@objc public enum PaymentAgencyType: Int {
+    case unknown = 0
+    case stripe = 1
+}
+
 public protocol OrderProtocol: class {
     associatedtype OrderableUser: UserDocument
     associatedtype OrderableOrderSKU: OrderSKUDocument
 
     var user: Reference<OrderableUser> { get set }
-
-    /// ストライプに登録したカード情報。このカードIDで決済を行う
-    var stripeCardID: String? { get set }
 
     /// 総計
     var amount: Int { get set }
@@ -74,6 +75,13 @@ public protocol OrderProtocol: class {
 
     /// customer payment status
     var paymentStatus: OrderPaymentStatus { get set }
+
+    var paymentAgencyType: PaymentAgencyType { get }
+}
+
+public protocol StripeChargeProtocol: OrderProtocol {
+    var stripeCustomerID: String? { get set }
+    var stripeCardID: String? { get set }
 }
 
 public extension OrderProtocol where Self: Object {

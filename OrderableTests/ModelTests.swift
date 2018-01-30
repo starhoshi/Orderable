@@ -11,7 +11,6 @@ import Orderable
 import FirebaseCore
 
 class ModelTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
         _ = FirebaseTest.shared
@@ -21,54 +20,21 @@ class ModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testSaveUser() {
-        let expectation: XCTestExpectation = XCTestExpectation(description: "save user")
-
-        let user = User()
-        user.stripeCustomerID = "cus_test"
-
-        user.save { ref, error in
-            User.get(ref!.documentID, block: { savedUser, error in
-                XCTAssertNotNil(savedUser)
-                XCTAssertEqual(savedUser?.stripeCustomerID, user.stripeCustomerID)
-                expectation.fulfill()
-            })
-        }
-        wait(for: [expectation], timeout: 10)
-    }
-
-    func testUpdateUser() {
-        let expectation: XCTestExpectation = XCTestExpectation(description: "update user")
-
-        let user = User()
-        user.stripeCustomerID = "cus_test"
-
-        user.save { ref, error in
-            user.stripeCustomerID = "cus_test_updated"
-            user.update { error in
-                User.get(ref!.documentID, block: { updatedUser, error in
-                    XCTAssertNotNil(updatedUser)
-                    XCTAssertEqual(updatedUser?.stripeCustomerID, user.stripeCustomerID)
-                    expectation.fulfill()
-                })
-            }
-        }
-        wait(for: [expectation], timeout: 10)
-    }
-
     func testSaveOrder() {
         let expectation: XCTestExpectation = XCTestExpectation(description: "save order")
 
         let user = User()
         let order = Order()
         order.user.set(user)
-        order.stripeCardID = "card_id"
         order.amount = 1000
         order.paidDate = 10
         order.expirationDate = 100
         order.stripeChargeID = "charge"
         order.currency = "jpy"
         order.paymentStatus = .created
+        order.stripeCardID = "card_id"
+        order.stripeCustomerID = "cus_id"
+        order.paymentAgencyType = .stripe
 
         order.save { ref, error in
             Order.get(ref!.documentID, block: { savedOrder, error in
@@ -81,6 +47,8 @@ class ModelTests: XCTestCase {
                 XCTAssertEqual(savedOrder?.stripeChargeID, order.stripeChargeID)
                 XCTAssertEqual(savedOrder?.currency, order.currency)
                 XCTAssertEqual(savedOrder?.paymentStatus, order.paymentStatus)
+                XCTAssertEqual(savedOrder?.stripeCustomerID, order.stripeCustomerID)
+                XCTAssertEqual(savedOrder?.paymentAgencyType, order.paymentAgencyType)
                 expectation.fulfill()
             })
         }
@@ -101,6 +69,8 @@ class ModelTests: XCTestCase {
         order.stripeChargeID = "charge"
         order.currency = "jpy"
         order.paymentStatus = .unknown
+        order.stripeCustomerID = "cus_id"
+        order.paymentAgencyType = .stripe
 
         order.save { ref, error in
             order.stripeCardID = "new_card_id"
@@ -110,6 +80,8 @@ class ModelTests: XCTestCase {
             order.stripeChargeID = "new_charge"
             order.currency = "us"
             order.paymentStatus = .created
+            order.stripeCustomerID = "new_cus_id"
+            order.paymentAgencyType = .unknown
 
             order.update { error in
                 Order.get(ref!.documentID, block: { updatedOrder, error in
@@ -121,6 +93,8 @@ class ModelTests: XCTestCase {
                     XCTAssertEqual(updatedOrder?.stripeChargeID, order.stripeChargeID)
                     XCTAssertEqual(updatedOrder?.currency, order.currency)
                     XCTAssertEqual(updatedOrder?.paymentStatus, order.paymentStatus)
+                    XCTAssertEqual(updatedOrder?.stripeCustomerID, order.stripeCustomerID)
+                    XCTAssertEqual(updatedOrder?.paymentAgencyType, order.paymentAgencyType)
                     expectation.fulfill()
                 })
             }
