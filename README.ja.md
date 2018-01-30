@@ -37,6 +37,7 @@ order.stripeCardID = "card_....."
 order.paymentStatus = OrderPaymentStatus.paymentRequested
 order.update() // exec cloud functions
 
+import Pring
 var disposer: Disposer<Order>?
 self?.disposer = Order.listen(order.id) { order, error in
   if order.stripeChargeID != nil {
