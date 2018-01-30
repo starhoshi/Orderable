@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     }
     @IBAction func didTapOrderButton(_ sender: Any) {
         Model.setup(stripeCustomerID: stripeCustomerIDField.text!, stripeCardID: stripeCardIDField.text!, amount: 1000) { [weak self] order in
-            order.status = OrderStatus.paymentRequested.rawValue
+            order.paymentStatus = OrderPaymentStatus.paymentRequested
             order.update()
             self?.disposer = Order.listen(order.id) { o, e in
                 if o?.stripeChargeID != nil {
