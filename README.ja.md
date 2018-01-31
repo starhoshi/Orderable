@@ -28,14 +28,21 @@ pod 'Orderable'
 Sample code is [here](https://github.com/starhoshi/Orderable/blob/master/Demo/ViewController.swift).
 
 ```swift
-user.stripeCustomerID = "cus_....."
-user.update()
+let order = Order()
+order.save()
 
 ...
 
-order.stripeCardID = "card_....."
+order.amount = 1000
+let stripe = Stripe()
+stripe.customerID = "new_cus"
+stripe.cardID = "new_card"
+stripe.chargeID = "new_charge"
+order.stripe = stripe
 order.paymentStatus = OrderPaymentStatus.paymentRequested
 order.update() // exec cloud functions
+
+...
 
 import Pring
 var disposer: Disposer<Order>?
