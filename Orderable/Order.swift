@@ -50,14 +50,16 @@ public protocol SKUProtocol: class {
     case paid = 4
 }
 
-@objc public enum PaymentAgencyType: Int {
-    case unknown = 0
-    case stripe = 1
+public protocol StripeProtocol: class {
+    var customerID: String? { get set }
+    var cardID: String? { get set }
+    var chargeID: String? { get set }
 }
 
 public protocol OrderProtocol: class {
     associatedtype OrderableUser: UserDocument
     associatedtype OrderableOrderSKU: OrderSKUDocument
+    associatedtype OrderableStripe: StripeProtocol
 
     var user: Reference<OrderableUser> { get set }
 
@@ -69,19 +71,13 @@ public protocol OrderProtocol: class {
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
     var expirationDate: TimeInterval { get set }
-    var stripeChargeID: String? { get set }
     var currency: String? { get set }
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 
     /// customer payment status
     var paymentStatus: OrderPaymentStatus { get set }
 
-    var paymentAgencyType: PaymentAgencyType { get }
-}
-
-public protocol StripeChargeProtocol: OrderProtocol {
-    var stripeCustomerID: String? { get set }
-    var stripeCardID: String? { get set }
+    var stripe: OrderableStripe? { get set }
 }
 
 public extension OrderProtocol where Self: Object {

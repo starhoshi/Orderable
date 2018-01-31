@@ -29,26 +29,25 @@ class ModelTests: XCTestCase {
         order.amount = 1000
         order.paidDate = 10
         order.expirationDate = 100
-        order.stripeChargeID = "charge"
         order.currency = "jpy"
         order.paymentStatus = .created
-        order.stripeCardID = "card_id"
-        order.stripeCustomerID = "cus_id"
-        order.paymentAgencyType = .stripe
+        order.stripe = Stripe()
+        order.stripe?.customerID = "cus"
+        order.stripe?.cardID = "card"
+        order.stripe?.chargeID = "charge"
 
         order.save { ref, error in
             Order.get(ref!.documentID, block: { savedOrder, error in
                 XCTAssertNotNil(savedOrder)
                 XCTAssertEqual(savedOrder?.user.id, user.id)
-                XCTAssertEqual(savedOrder?.stripeCardID, order.stripeCardID)
                 XCTAssertEqual(savedOrder?.amount, order.amount)
                 XCTAssertEqual(savedOrder?.paidDate, order.paidDate)
                 XCTAssertEqual(savedOrder?.expirationDate, order.expirationDate)
-                XCTAssertEqual(savedOrder?.stripeChargeID, order.stripeChargeID)
                 XCTAssertEqual(savedOrder?.currency, order.currency)
                 XCTAssertEqual(savedOrder?.paymentStatus, order.paymentStatus)
-                XCTAssertEqual(savedOrder?.stripeCustomerID, order.stripeCustomerID)
-                XCTAssertEqual(savedOrder?.paymentAgencyType, order.paymentAgencyType)
+                XCTAssertEqual(savedOrder?.stripe?.customerID, order.stripe?.customerID)
+                XCTAssertEqual(savedOrder?.stripe?.chargeID, order.stripe?.chargeID)
+                XCTAssertEqual(savedOrder?.stripe?.cardID, order.stripe?.cardID)
                 expectation.fulfill()
             })
         }
@@ -62,39 +61,41 @@ class ModelTests: XCTestCase {
         let user = User()
         let order = Order()
         order.user.set(user)
-        order.stripeCardID = "card_id"
         order.amount = 1000
         order.paidDate = 10
         order.expirationDate = 100
-        order.stripeChargeID = "charge"
         order.currency = "jpy"
         order.paymentStatus = .unknown
-        order.stripeCustomerID = "cus_id"
-        order.paymentAgencyType = .stripe
+        let stripe = Stripe()
+        stripe.customerID = "cus"
+        stripe.cardID = "card"
+        stripe.chargeID = "charge"
+        order.stripe = stripe
 
         order.save { ref, error in
-            order.stripeCardID = "new_card_id"
             order.amount = 111111
             order.paidDate = 1234
             order.expirationDate = 5678
-            order.stripeChargeID = "new_charge"
             order.currency = "us"
             order.paymentStatus = .created
-            order.stripeCustomerID = "new_cus_id"
-            order.paymentAgencyType = .unknown
+            let stripe = Stripe()
+            stripe.customerID = "new_cus"
+            stripe.cardID = "new_card"
+            stripe.chargeID = "new_charge"
+            order.stripe = stripe
 
             order.update { error in
                 Order.get(ref!.documentID, block: { updatedOrder, error in
                     XCTAssertNotNil(updatedOrder)
-                    XCTAssertEqual(updatedOrder?.stripeCardID, order.stripeCardID)
                     XCTAssertEqual(updatedOrder?.amount, order.amount)
                     XCTAssertEqual(updatedOrder?.paidDate, order.paidDate)
                     XCTAssertEqual(updatedOrder?.expirationDate, order.expirationDate)
-                    XCTAssertEqual(updatedOrder?.stripeChargeID, order.stripeChargeID)
                     XCTAssertEqual(updatedOrder?.currency, order.currency)
                     XCTAssertEqual(updatedOrder?.paymentStatus, order.paymentStatus)
-                    XCTAssertEqual(updatedOrder?.stripeCustomerID, order.stripeCustomerID)
-                    XCTAssertEqual(updatedOrder?.paymentAgencyType, order.paymentAgencyType)
+                    XCTAssertEqual(updatedOrder?.paymentStatus, order.paymentStatus)
+                    XCTAssertEqual(updatedOrder?.stripe?.customerID, order.stripe?.customerID)
+                    XCTAssertEqual(updatedOrder?.stripe?.chargeID, order.stripe?.chargeID)
+                    XCTAssertEqual(updatedOrder?.stripe?.cardID, order.stripe?.cardID)
                     expectation.fulfill()
                 })
             }

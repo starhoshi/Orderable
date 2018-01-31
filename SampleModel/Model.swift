@@ -36,9 +36,17 @@ public class SKU: Object, SKUProtocol {
 }
 
 @objcMembers
-class Order: Object, StripeChargeProtocol {
+class Stripe: Object, StripeProtocol {
+    dynamic var customerID: String?
+    dynamic var cardID: String?
+    dynamic var chargeID: String?
+}
+
+@objcMembers
+class Order: Object, OrderProtocol {
     typealias OrderableUser = User
     typealias OrderableOrderSKU = OrderSKU
+    typealias OrderableStripe = Stripe
 
     dynamic var user: Reference<OrderableUser> = .init()
 
@@ -50,7 +58,6 @@ class Order: Object, StripeChargeProtocol {
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
     dynamic var expirationDate: TimeInterval = 0
-    dynamic var stripeChargeID: String? = nil
     dynamic var currency: String? = "jpy"
     dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
 
@@ -61,18 +68,14 @@ class Order: Object, StripeChargeProtocol {
     dynamic var regionID: Int = 0
 
     dynamic var paymentStatus: OrderPaymentStatus = .unknown
-    dynamic var paymentAgencyType: PaymentAgencyType = .stripe
-
-    /// ストライプに登録したカード情報。このカードIDで決済を行う
-    dynamic var stripeCardID: String? = "card_1BnhthKZcOra3JxsKaxABsRj"
-    dynamic var stripeCustomerID: String? = "cus_CC65RZ8Gf6zi7V"
+    dynamic var stripe: OrderableStripe?
 
     override func encode(_ key: String, value: Any?) -> Any? {
         switch key {
         case (\Order.paymentStatus)._kvcKeyPathString!:
             return paymentStatus.rawValue
-        case (\Order.paymentAgencyType)._kvcKeyPathString!:
-            return paymentAgencyType.rawValue
+        case (\Order.stripe)._kvcKeyPathString!:
+            return stripe?.value
         default:
             return nil
         }
@@ -83,9 +86,12 @@ class Order: Object, StripeChargeProtocol {
         case (\Order.paymentStatus)._kvcKeyPathString!:
             paymentStatus = (value as? Int).flatMap(OrderPaymentStatus.init(rawValue:)) ?? .unknown
             return true
-        case (\Order.paymentAgencyType)._kvcKeyPathString!:
-            paymentAgencyType = (value as? Int).flatMap(PaymentAgencyType.init(rawValue:)) ?? .unknown
-            return true
+        case (\Order.stripe)._kvcKeyPathString!:
+            if let value = value as? [AnyHashable : Any] {
+                stripe = Stripe(id: key, value: value)
+                return true
+            }
+            return false
         default:
             return false
         }
@@ -209,7 +215,8 @@ class Model {
         let newOrder = Order()
         newOrder.user.set(newUser)
         newOrder.amount = amount
-        newOrder.stripeCardID = stripeCardID
+//        newOrder.stripe = Stripe()
+//        newOrder.stripe?.cardID =
         newOrder.save { _, _ in
             order = newOrder; fulfill()
         }
