@@ -37,8 +37,8 @@ public class SKU: Object, SKUProtocol {
 
 @objcMembers
 class Stripe: Object, StripeProtocol {
-    dynamic var customerID: String?
-    dynamic var cardID: String?
+    dynamic var customerID: String? = "cus_CC65RZ8Gf6zi7V"
+    dynamic var cardID: String? = "card_1BnhthKZcOra3JxsKaxABsRj"
     dynamic var chargeID: String?
 }
 
@@ -215,8 +215,8 @@ class Model {
         let newOrder = Order()
         newOrder.user.set(newUser)
         newOrder.amount = amount
-//        newOrder.stripe = Stripe()
-//        newOrder.stripe?.cardID =
+        newOrder.stripe = Stripe()
+        newOrder.stripe?.cardID = ""
         newOrder.save { _, _ in
             order = newOrder; fulfill()
         }
