@@ -34,18 +34,18 @@ class OrderableTests: XCTestCase {
         order = nil
     }
 
-//    func testPayOrder() {
-//        let expectation: XCTestExpectation = XCTestExpectation(description: "pay order")
-//
-//        order?.paymentStatus = .paymentRequested
-//        order?.update()
-//        disposer = Order.listen(order!.id) { o, e in
-//            if o?.stripeChargeID != nil {
-//                expectation.fulfill()
-//            }
-//        }
-//
-//        wait(for: [expectation], timeout: 20)
-//    }
+    func testPayOrder() {
+        let expectation: XCTestExpectation = XCTestExpectation(description: "pay order")
+
+        order?.paymentStatus = .paymentRequested
+        order?.update()
+        disposer = Order.listen(order!.id) { o, e in
+            if o?.stripe?.chargeID != nil {
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 20)
+    }
 }
 

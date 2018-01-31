@@ -77,17 +77,18 @@ public protocol OrderProtocol: class {
     /// customer payment status
     var paymentStatus: OrderPaymentStatus { get set }
 
+    /// set Stripe if you want to use stripe charge
     var stripe: OrderableStripe? { get set }
 }
 
-public extension OrderProtocol where Self: Object {
-    public func pay(_ block: ((Error?) -> Void)? = nil) {
-        paymentStatus = .paymentRequested
-        update { error in
-            block?(error)
-        }
-    }
-}
+//public extension OrderProtocol where Self: Object {
+//    public func pay(_ block: ((Error?) -> Void)? = nil) {
+//        paymentStatus = .paymentRequested
+//        update { error in
+//            block?(error)
+//        }
+//    }
+//}
 
 @objc public enum OrderShopPaymentStatus: Int {
     case unknown = 0
