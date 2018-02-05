@@ -23,21 +23,21 @@ class ModelTests: XCTestCase {
     func testSaveOrder() {
         let expectation: XCTestExpectation = XCTestExpectation(description: "save order")
 
-        let user = User()
-        let order = Order()
+        let user = SampleUser()
+        let order = SampleOrder()
         order.user.set(user)
         order.amount = 1000
         order.paidDate = 10
         order.expirationDate = 100
         order.currency = "jpy"
         order.paymentStatus = .created
-        order.stripe = Stripe()
+        order.stripe = SampleStripe()
         order.stripe?.customerID = "cus"
         order.stripe?.cardID = "card"
         order.stripe?.chargeID = "charge"
 
         order.save { ref, error in
-            Order.get(ref!.documentID, block: { savedOrder, error in
+            SampleOrder.get(ref!.documentID, block: { savedOrder, error in
                 XCTAssertNotNil(savedOrder)
                 XCTAssertEqual(savedOrder?.user.id, user.id)
                 XCTAssertEqual(savedOrder?.amount, order.amount)
@@ -58,15 +58,15 @@ class ModelTests: XCTestCase {
     func testUpdaterder() {
         let expectation: XCTestExpectation = XCTestExpectation(description: "update order")
 
-        let user = User()
-        let order = Order()
+        let user = SampleUser()
+        let order = SampleOrder()
         order.user.set(user)
         order.amount = 1000
         order.paidDate = 10
         order.expirationDate = 100
         order.currency = "jpy"
         order.paymentStatus = .unknown
-        let stripe = Stripe()
+        let stripe = SampleStripe()
         stripe.customerID = "cus"
         stripe.cardID = "card"
         stripe.chargeID = "charge"
@@ -78,14 +78,14 @@ class ModelTests: XCTestCase {
             order.expirationDate = 5678
             order.currency = "us"
             order.paymentStatus = .created
-            let stripe = Stripe()
+            let stripe = SampleStripe()
             stripe.customerID = "new_cus"
             stripe.cardID = "new_card"
             stripe.chargeID = "new_charge"
             order.stripe = stripe
 
             order.update { error in
-                Order.get(ref!.documentID, block: { updatedOrder, error in
+                SampleOrder.get(ref!.documentID, block: { updatedOrder, error in
                     XCTAssertNotNil(updatedOrder)
                     XCTAssertEqual(updatedOrder?.amount, order.amount)
                     XCTAssertEqual(updatedOrder?.paidDate, order.paidDate)

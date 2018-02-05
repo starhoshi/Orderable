@@ -11,23 +11,23 @@ import Pring
 import Orderable
 
 @objcMembers
-public class User: Object, UserProtocol {
+public class SampleUser: Object, UserProtocol {
 }
 
 @objcMembers
-public class Shop: Object, ShopProtocol {
+public class SampleShop: Object, ShopProtocol {
     public dynamic var name: String? = "shop_name"
     public dynamic var isActive: Bool = true
     public dynamic var freePostageMinimumPrice: Int = -1
 }
 
 @objcMembers
-public class Product: Object, ProductProtocol {
+public class SampleProduct: Object, ProductProtocol {
     public dynamic var name: String? = "product_name"
 }
 
 @objcMembers
-public class SKU: Object, SKUProtocol {
+public class SampleSKU: Object, SKUProtocol {
     public dynamic var price: Int = 100
     public dynamic var stockType: StockType = .finite
     public dynamic var stock: Int = 100
@@ -36,17 +36,17 @@ public class SKU: Object, SKUProtocol {
 }
 
 @objcMembers
-class Stripe: Object, StripeProtocol {
+class SampleStripe: Object, StripeProtocol {
     dynamic var customerID: String? = "cus_CC65RZ8Gf6zi7V"
     dynamic var cardID: String? = "card_1BnhthKZcOra3JxsKaxABsRj"
     dynamic var chargeID: String?
 }
 
 @objcMembers
-class Order: Object, OrderProtocol {
-    typealias OrderableUser = User
-    typealias OrderableOrderSKU = OrderSKU
-    typealias OrderableStripe = Stripe
+class SampleOrder: Object, OrderProtocol {
+    typealias OrderableUser = SampleUser
+    typealias OrderableOrderSKU = SampleOrderSKU
+    typealias OrderableStripe = SampleStripe
 
     dynamic var user: Reference<OrderableUser> = .init()
 
@@ -72,9 +72,9 @@ class Order: Object, OrderProtocol {
 
     override func encode(_ key: String, value: Any?) -> Any? {
         switch key {
-        case (\Order.paymentStatus)._kvcKeyPathString!:
+        case (\SampleOrder.paymentStatus)._kvcKeyPathString!:
             return paymentStatus.rawValue
-        case (\Order.stripe)._kvcKeyPathString!:
+        case (\SampleOrder.stripe)._kvcKeyPathString!:
             return stripe?.value
         default:
             return nil
@@ -83,12 +83,12 @@ class Order: Object, OrderProtocol {
 
     override func decode(_ key: String, value: Any?) -> Bool {
         switch key {
-        case (\Order.paymentStatus)._kvcKeyPathString!:
+        case (\SampleOrder.paymentStatus)._kvcKeyPathString!:
             paymentStatus = (value as? Int).flatMap(OrderPaymentStatus.init(rawValue:)) ?? .unknown
             return true
-        case (\Order.stripe)._kvcKeyPathString!:
+        case (\SampleOrder.stripe)._kvcKeyPathString!:
             if let value = value as? [AnyHashable : Any] {
-                stripe = Stripe(id: key, value: value)
+                stripe = SampleStripe(id: key, value: value)
                 return true
             }
             return false
@@ -99,10 +99,10 @@ class Order: Object, OrderProtocol {
 }
 
 @objcMembers
-class OrderShop: Object, OrderShopProtocol {
-    typealias OrderableUser = User
-    typealias OrderableOrder = Order
-    typealias OrderableOrderSKU = OrderSKU
+class SampleOrderShop: Object, OrderShopProtocol {
+    typealias OrderableUser = SampleUser
+    typealias OrderableOrder = SampleOrder
+    typealias OrderableOrderSKU = SampleOrderSKU
 
     dynamic var order: Reference<OrderableOrder> = .init()
 
@@ -116,7 +116,7 @@ class OrderShop: Object, OrderShopProtocol {
 
     override func encode(_ key: String, value: Any?) -> Any? {
         switch key {
-        case (\OrderShop.paymentStatus)._kvcKeyPathString!:
+        case (\SampleOrderShop.paymentStatus)._kvcKeyPathString!:
             return paymentStatus.rawValue
         default:
             return nil
@@ -125,7 +125,7 @@ class OrderShop: Object, OrderShopProtocol {
 
     override func decode(_ key: String, value: Any?) -> Bool {
         switch key {
-        case (\OrderShop.paymentStatus)._kvcKeyPathString!:
+        case (\SampleOrderShop.paymentStatus)._kvcKeyPathString!:
             paymentStatus = (value as? Int).flatMap(OrderShopPaymentStatus.init(rawValue:)) ?? .unknown
             return true
         default:
@@ -135,11 +135,11 @@ class OrderShop: Object, OrderShopProtocol {
 }
 
 @objcMembers
-class OrderSKU: Object, OrderSKUProtocol {
-    typealias OrderableSKU = SKU
-    typealias OrderableShop = Shop
-    typealias SnapshotSKU = SKU
-    typealias SnapshotProduct = Product
+class SampleOrderSKU: Object, OrderSKUProtocol {
+    typealias OrderableSKU = SampleSKU
+    typealias OrderableShop = SampleShop
+    typealias SnapshotSKU = SampleSKU
+    typealias SnapshotProduct = SampleProduct
 
     dynamic var snapshotSKU: SnapshotSKU?
     dynamic var snapshotProduct: SnapshotProduct?
@@ -149,9 +149,9 @@ class OrderSKU: Object, OrderSKUProtocol {
 
     override func encode(_ key: String, value: Any?) -> Any? {
         switch key {
-        case (\OrderSKU.snapshotSKU)._kvcKeyPathString!:
+        case (\SampleOrderSKU.snapshotSKU)._kvcKeyPathString!:
             return snapshotSKU?.value
-        case (\OrderSKU.snapshotProduct)._kvcKeyPathString!:
+        case (\SampleOrderSKU.snapshotProduct)._kvcKeyPathString!:
             return snapshotProduct?.value
         default:
             return nil
@@ -160,11 +160,11 @@ class OrderSKU: Object, OrderSKUProtocol {
 
     override func decode(_ key: String, value: Any?) -> Bool {
         switch key {
-        case (\OrderSKU.snapshotSKU)._kvcKeyPathString!:
-            snapshotSKU = SKU(id: key, value: value as! [AnyHashable: Any])
+        case (\SampleOrderSKU.snapshotSKU)._kvcKeyPathString!:
+            snapshotSKU = SampleSKU(id: key, value: value as! [AnyHashable: Any])
             return true
-        case (\OrderSKU.snapshotProduct)._kvcKeyPathString!:
-            snapshotProduct = Product(id: key, value: value as! [AnyHashable: Any])
+        case (\SampleOrderSKU.snapshotProduct)._kvcKeyPathString!:
+            snapshotProduct = SampleProduct(id: key, value: value as! [AnyHashable: Any])
             return true
         default:
             return false
@@ -175,14 +175,14 @@ class OrderSKU: Object, OrderSKUProtocol {
 // MARK: - for test
 
 class Model {
-    static func setup(stripeCustomerID: String = "cus_CC65RZ8Gf6zi7V", stripeCardID: String = "card_1BnhthKZcOra3JxsKaxABsRj", amount: Int = 1000, callback: @escaping (Order) -> Void) {
-        var user: User?
-        var shop: Shop?
-        var product: Product?
-        var sku: SKU?
-        var order: Order?
-        var orderShop: OrderShop?
-        var orderSKU: OrderSKU?
+    static func setup(stripeCustomerID: String = "cus_CC65RZ8Gf6zi7V", stripeCardID: String = "card_1BnhthKZcOra3JxsKaxABsRj", amount: Int = 1000, callback: @escaping (SampleOrder) -> Void) {
+        var user: SampleUser?
+        var shop: SampleShop?
+        var product: SampleProduct?
+        var sku: SampleSKU?
+        var order: SampleOrder?
+        var orderShop: SampleOrderShop?
+        var orderSKU: SampleOrderSKU?
 
         func fulfill() {
             if user != nil, shop != nil, product != nil, sku != nil, order != nil, orderShop != nil, orderSKU != nil {
@@ -196,37 +196,37 @@ class Model {
             }
         }
 
-        let newUser = User()
+        let newUser = SampleUser()
         newUser.save { _, _ in
             user = newUser; fulfill()
         }
-        let newShop = Shop()
+        let newShop = SampleShop()
         newShop.save { _, _ in
             shop = newShop; fulfill()
         }
-        let newProduct = Product()
+        let newProduct = SampleProduct()
         newProduct.save { _, _ in
             product = newProduct; fulfill()
         }
-        let newSKU = SKU()
+        let newSKU = SampleSKU()
         newSKU.save { _, _ in
             sku = newSKU; fulfill()
         }
-        let newOrder = Order()
+        let newOrder = SampleOrder()
         newOrder.user.set(newUser)
         newOrder.amount = amount
-        newOrder.stripe = Stripe()
-        newOrder.stripe?.cardID = ""
+        newOrder.stripe = SampleStripe()
+        newOrder.paymentStatus = .created
         newOrder.save { _, _ in
             order = newOrder; fulfill()
         }
-        let newOrderShop = OrderShop()
+        let newOrderShop = SampleOrderShop()
         newOrderShop.order.set(newOrder)
         newOrderShop.user.set(newUser)
         newOrderShop.save { _, _ in
             orderShop = newOrderShop; fulfill()
         }
-        let newOrderSKU = OrderSKU()
+        let newOrderSKU = SampleOrderSKU()
         newOrderSKU.sku.set(newSKU)
         newOrderSKU.shop.set(newShop)
         newOrderSKU.snapshotSKU = newSKU

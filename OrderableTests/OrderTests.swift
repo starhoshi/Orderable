@@ -12,9 +12,9 @@ import FirebaseCore
 import Pring
 
 class OrderableTests: XCTestCase {
-    var disposer: Disposer<Order>?
+    var disposer: Disposer<SampleOrder>?
 
-    var order: Order?
+    var order: SampleOrder?
 
     override func setUp() {
         super.setUp()
@@ -36,10 +36,9 @@ class OrderableTests: XCTestCase {
 
     func testPayOrder() {
         let expectation: XCTestExpectation = XCTestExpectation(description: "pay order")
-
         order?.paymentStatus = .paymentRequested
         order?.update()
-        disposer = Order.listen(order!.id) { o, e in
+        disposer = SampleOrder.listen(order!.id) { o, e in
             if o?.stripe?.chargeID != nil {
                 expectation.fulfill()
             }
