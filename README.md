@@ -52,7 +52,7 @@ Deploy [orderable.ts](https://github.com/starhoshi/Orderable.ts) to Cloud Functi
 
 ### 3. Pay an order
 
-Sample code is [here](https://github.com/starhoshi/Orderable/blob/master/Demo/ViewController.swift). `order.paymentStatus = OrderPaymentStatus.paymentRequested` にして update すると Cloud Functions が動き出します。
+Sample code is [here](https://github.com/starhoshi/Orderable/blob/master/Demo/ViewController.swift). orderable.ts starts when `order.paymentStatus = OrderPaymentStatus.paymentRequested` and update is done.
 
 ```swift
 let order = Order()
@@ -73,7 +73,7 @@ order.update() // start cloud functions
 
 ### 4. Result
 
-Cloud Functions が成功すると、 `order.neoTask.status === 1` がセットされます。 order を observe して処理が完了するのを待ってください。
+When purchase processing is completed, order.neoTask.status === 1 will be set. That is a sign of success. Observe the order and wait for the process to complete.
 
 ```swift
 import Pring
@@ -88,14 +88,15 @@ self?.disposer = Order.listen(order.id) { order, error in
 
 ## Error
 
-詳細なエラーは [starhoshi/orderable\.ts#Error](https://github.com/starhoshi/orderable.ts#neotask) に記載してありますので、それぞれのエラーに対しクライアント側で適切にハンドリングしてください。
+Detailed errors are listed [here](https://github.com/starhoshi/orderable.ts#neotask).
+You need to handle error by each error type.
 
-クライアント側が意識するべきエラーは以下の2つです。
+On the client side, handle the following two errors.
 
 * invalid
-  * クライアント側で修正が必要なエラー
+  * Need to fix properties on the client side.
 * fatal
-  * 開発者が手動で対応しなければならないもの
+  * Have to check and correct the data directly.
 
 ## LICENSE
 
