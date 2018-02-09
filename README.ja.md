@@ -4,7 +4,7 @@
 
 # Orderable
 
-<b>⚠️　Orderable は現在開発中です ⚠️</b>
+<b>⚠️ Orderable は現在開発中です ⚠️</b>
 
 Orderable は Cloud Functions for Firebase と連携し、決済が簡単に実行できるライブラリです。  
 EC に必要な在庫チェック、購入処理、購入後の履歴作成などを実行できます。
