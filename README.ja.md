@@ -47,39 +47,47 @@ pod 'Orderable'
 
 ### 3. Pay an order
 
-Sample code is [here](https://github.com/starhoshi/Orderable/blob/master/Demo/ViewController.swift).
-`order.paymentStatus = OrderPaymentStatus.paymentRequested` にして update すると Cloud Functions が動き出します。
+Sample code is [here](https://github.com/starhoshi/Orderable/blob/master/Demo/ViewController.swift). `order.paymentStatus = OrderPaymentStatus.paymentRequested` にして update すると Cloud Functions が動き出します。
 
 ```swift
 let order = Order()
+order.amount = 1000
+let stripe = Stripe()
+stripe.customerID = "new_cus"
+stripe.cardID = "new_card"
+order.stripe = stripe
 order.paymentStatus = OrderPaymentStatus.created
 order.save()
 
 ...
 
-order.amount = 1000
-let stripe = Stripe()
-stripe.customerID = "new_cus"
-stripe.cardID = "new_card"
-stripe.chargeID = "new_charge"
-order.stripe = stripe
-
 // functions trigger
 order.paymentStatus = OrderPaymentStatus.paymentRequested
-order.update() // exec cloud functions
+order.update() // start cloud functions
+```
 
-...
+### 4. Result
 
+Cloud Functions が成功すると、 `order.neoTask.status === 1` がセットされます。 order を observe して処理が完了するのを待ってください。
+
+```swift
 import Pring
+
 var disposer: Disposer<Order>?
 self?.disposer = Order.listen(order.id) { order, error in
-  if order.stripeChargeID != nil {
+  if order.neoTask.status === 1, order.stripeChargeID != nil {
     // stripe charge completed.
   }
 }
 ```
 
-### 4. Result
-
 ## Error
 
+詳細なエラーは [starhoshi/orderable\.ts#Error](https://github.com/starhoshi/orderable.ts#neotask) に記載してありますので、それぞれのエラーに対しクライアント側で適切にハンドリングしてください。
+
+クライアント側が意識するべきエラーは以下の2つです。
+
+* invalid
+  * クライアント側で修正が必要なエラー
+* fatal
+  * 開発者が手動で対応しなければならないもの
