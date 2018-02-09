@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var stripeCardIDField: UITextField!
     @IBOutlet weak var resultLabel: UILabel!
 
-    var disposer: Disposer<Order>?
+    var disposer: Disposer<SampleOrder>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +23,12 @@ class ViewController: UIViewController {
         Model.setup(stripeCustomerID: stripeCustomerIDField.text!, stripeCardID: stripeCardIDField.text!, amount: 1000) { [weak self] order in
             order.paymentStatus = OrderPaymentStatus.paymentRequested
             order.update()
-            self?.disposer = Order.listen(order.id) { o, e in
-                if o?.stripeChargeID != nil {
+            self?.disposer = SampleOrder.listen(order.id) { o, e in
+                if let chargeID = o?.stripe?.chargeID {
                     var results: [String] = []
                     results.append("OrderID: \(order.id)")
                     results.append("UserID: \(order.user.id ?? "")")
-                    results.append("StripeChargeID: \(o?.stripeChargeID ?? "")")
+                    results.append("StripeChargeID: \(chargeID)")
                     self?.resultLabel.text = results.joined(separator: "\n")
                 }
             }

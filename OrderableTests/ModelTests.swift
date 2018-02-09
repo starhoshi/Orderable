@@ -103,24 +103,4 @@ class ModelTests: XCTestCase {
 
         wait(for: [expectation], timeout: 10)
     }
-
-    // TODO: order.status is not updated
-//    func testOrderPay() {
-//        let expectation: XCTestExpectation = XCTestExpectation(description: "update order")
-//
-//        let order = Order()
-//        order.status = OrderStatus.created.rawValue
-//
-//        order.save { ref, error in
-//            order.pay { error in
-//                Order.get(ref!.documentID, block: { updatedOrder, error in
-//                    XCTAssertNotNil(updatedOrder)
-//                    XCTAssertEqual(updatedOrder?.status, OrderStatus.paymentRequested.rawValue)
-//                    expectation.fulfill()
-//                })
-//            }
-//        }
-//
-//        wait(for: [expectation], timeout: 10)
-//    }
 }

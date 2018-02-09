@@ -81,15 +81,6 @@ public protocol OrderProtocol: class {
     var stripe: OrderableStripe? { get set }
 }
 
-//public extension OrderProtocol where Self: Object {
-//    public func pay(_ block: ((Error?) -> Void)? = nil) {
-//        paymentStatus = .paymentRequested
-//        update { error in
-//            block?(error)
-//        }
-//    }
-//}
-
 @objc public enum OrderShopPaymentStatus: Int {
     case unknown = 0
     case created = 1
