@@ -41,7 +41,7 @@ pod 'Orderable'
 * OrderSKU
   * 注文された商品。購入数などを持つ。
 
-### 2. Deploy Cloud Functions
+### 2. Deploy
 
 [orderable.ts](https://github.com/starhoshi/Orderable.ts) を Cloud Functions に Deploy してください。
 
