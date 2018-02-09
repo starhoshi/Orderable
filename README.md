@@ -8,7 +8,7 @@
 
 for japanese: [README\.ja\.md](https://github.com/starhoshi/Orderable/blob/master/README.ja.md)
 
-orderable.ts is a CocoaPods library that works with Cloud Functions for Firebase and can easily execute payment.
+Orderable is a CocoaPods library that works with Cloud Functions for Firebase and can easily execute payment.
 
 EC requires a lot of processing. For example, check number of stocks, payment process, create history, and so on. Orderable exec these troublesome tasks.
 
