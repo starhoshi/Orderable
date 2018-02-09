@@ -12,7 +12,7 @@ orderable.ts is a CocoaPods library that works with Cloud Functions for Firebase
 
 EC requires a lot of processing. For example, check number of stocks, payment process, create history, and so on. Orderable exec these troublesome tasks.
 
-For Server Side (Cloud Functions for Firebase): [starhoshi/orderable](https://github.com/starhoshi/orderable.ts)
+For Server Side (Cloud Functions for Firebase): [starhoshi/orderable.ts](https://github.com/starhoshi/orderable.ts)
 
 ## Installation
 
