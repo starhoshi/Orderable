@@ -30,9 +30,12 @@ public protocol ProductProtocol: class {
 }
 
 public enum StockType: String, Decodable {
-    case unknown /// 不明: 初期値以外では基本使用しない
-    case finite /// 有限: stock で在庫数を管理
-    case infinite /// 無限: stock は 0 になっている
+    /// 不明: 初期値以外では基本使用しない
+    case unknown
+    /// 有限: stock で在庫数を管理
+    case finite
+    /// 無限: stock は 0 になっている
+    case infinite
 }
 public protocol SKUProtocol: class {
     var price: Int { get set }
