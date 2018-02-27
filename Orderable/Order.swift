@@ -70,10 +70,10 @@ public protocol OrderProtocol: class {
     var amount: Int { get set }
 
     /// 支払いが行われた日時
-    var paidDate: TimeInterval { get set }
+    var paidDate: Date? { get set }
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
-    var expirationDate: TimeInterval { get set }
+    var expirationDate: Date? { get set }
     var currency: String? { get set }
     var orderSKUs: ReferenceCollection<OrderableOrderSKU> { get set }
 

@@ -54,10 +54,10 @@ class SampleOrder: Object, OrderProtocol {
     dynamic var amount: Int = 0
 
     /// 支払いが行われた日時
-    dynamic var paidDate: TimeInterval = 0
+    dynamic var paidDate: Date?
 
     /// 有効期限 この期限を過ぎたらこのオーダーは無効になる
-    dynamic var expirationDate: TimeInterval = 0
+    dynamic var expirationDate: Date?
     dynamic var currency: String? = "jpy"
     dynamic var orderSKUs: ReferenceCollection<OrderableOrderSKU> = []
 

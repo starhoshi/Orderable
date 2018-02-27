@@ -27,8 +27,8 @@ class ModelTests: XCTestCase {
         let order = SampleOrder()
         order.user.set(user)
         order.amount = 1000
-        order.paidDate = 10
-        order.expirationDate = 100
+        order.paidDate = Date(timeIntervalSince1970: 111111)
+        order.expirationDate = Date(timeIntervalSince1970: 33333)
         order.currency = "jpy"
         order.paymentStatus = .created
         order.stripe = SampleStripe()
@@ -41,8 +41,8 @@ class ModelTests: XCTestCase {
                 XCTAssertNotNil(savedOrder)
                 XCTAssertEqual(savedOrder?.user.id, user.id)
                 XCTAssertEqual(savedOrder?.amount, order.amount)
-                XCTAssertEqual(savedOrder?.paidDate, order.paidDate)
-                XCTAssertEqual(savedOrder?.expirationDate, order.expirationDate)
+                XCTAssertEqual(savedOrder?.paidDate?.timeIntervalSince1970, order.paidDate?.timeIntervalSince1970)
+                XCTAssertEqual(savedOrder?.expirationDate?.timeIntervalSince1970, order.expirationDate?.timeIntervalSince1970)
                 XCTAssertEqual(savedOrder?.currency, order.currency)
                 XCTAssertEqual(savedOrder?.paymentStatus, order.paymentStatus)
                 XCTAssertEqual(savedOrder?.stripe?.customerID, order.stripe?.customerID)
@@ -62,8 +62,8 @@ class ModelTests: XCTestCase {
         let order = SampleOrder()
         order.user.set(user)
         order.amount = 1000
-        order.paidDate = 10
-        order.expirationDate = 100
+        order.paidDate = Date(timeIntervalSince1970: 1)
+        order.expirationDate = Date(timeIntervalSince1970: 109865433)
         order.currency = "jpy"
         order.paymentStatus = .unknown
         let stripe = SampleStripe()
@@ -74,8 +74,8 @@ class ModelTests: XCTestCase {
 
         order.save { ref, error in
             order.amount = 111111
-            order.paidDate = 1234
-            order.expirationDate = 5678
+            order.paidDate = Date(timeIntervalSince1970: 3456)
+            order.expirationDate = Date(timeIntervalSince1970: 9976)
             order.currency = "us"
             order.paymentStatus = .created
             let stripe = SampleStripe()
@@ -89,7 +89,8 @@ class ModelTests: XCTestCase {
                     XCTAssertNotNil(updatedOrder)
                     XCTAssertEqual(updatedOrder?.amount, order.amount)
                     XCTAssertEqual(updatedOrder?.paidDate, order.paidDate)
-                    XCTAssertEqual(updatedOrder?.expirationDate, order.expirationDate)
+                    XCTAssertEqual(updatedOrder?.paidDate?.timeIntervalSince1970, order.paidDate?.timeIntervalSince1970)
+                    XCTAssertEqual(updatedOrder?.expirationDate?.timeIntervalSince1970, order.expirationDate?.timeIntervalSince1970)
                     XCTAssertEqual(updatedOrder?.currency, order.currency)
                     XCTAssertEqual(updatedOrder?.paymentStatus, order.paymentStatus)
                     XCTAssertEqual(updatedOrder?.paymentStatus, order.paymentStatus)

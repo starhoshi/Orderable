@@ -47,4 +47,3 @@ class OrderableTests: XCTestCase {
         wait(for: [expectation], timeout: 20)
     }
 }
-
